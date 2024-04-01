@@ -20,6 +20,7 @@ import {
   OrderInfo
 } from '@components';
 import { Route, Routes } from 'react-router-dom';
+import { ProtectedRoute } from '../../utils/protectedRoute';
 
 const App = () => (
   <div className={styles.app}>
@@ -27,12 +28,54 @@ const App = () => (
     <Routes>
       <Route path='/' element={<ConstructorPage />} />
       <Route path='/feed' element={<Feed />} />
-      <Route path='/register' element={<Register />} />
-      <Route path='/login' element={<Login />} />
-      <Route path='/forgot-password' element={<ForgotPassword />} />
-      <Route path='/reset-password' element={<ResetPassword />} />
-      <Route path='/profile' element={<Profile />} />
-      <Route path='/profile/orders' element={<ProfileOrders />} />
+      <Route
+        path='/register'
+        element={
+          <ProtectedRoute onlyUnAuth>
+            <Register />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/login'
+        element={
+          <ProtectedRoute onlyUnAuth>
+            <Login />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/forgot-password'
+        element={
+          <ProtectedRoute onlyUnAuth>
+            <ForgotPassword />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/reset-password'
+        element={
+          <ProtectedRoute onlyUnAuth>
+            <ResetPassword />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/profile'
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/profile/orders'
+        element={
+          <ProtectedRoute>
+            <ProfileOrders />
+          </ProtectedRoute>
+        }
+      />
       <Route path='*' element={<NotFound404 />} />
     </Routes>
 
@@ -56,7 +99,15 @@ const App = () => (
       <Route
         path='/profile/orders/:number'
         element={
-          <Modal title='hello' children={<OrderInfo />} onClose={() => {}} />
+          <Modal
+            title='hello'
+            children={
+              <ProtectedRoute>
+                <OrderInfo />
+              </ProtectedRoute>
+            }
+            onClose={() => {}}
+          />
         }
       />
     </Routes>
