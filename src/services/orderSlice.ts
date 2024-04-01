@@ -1,6 +1,7 @@
 import { getOrdersApi, orderBurgerApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
+import { RootState } from './store';
 
 export const getOrders = createAsyncThunk('orders/getOrders', async () => {
   const response = await getOrdersApi();
@@ -52,5 +53,7 @@ const orderSlice = createSlice({
       });
   }
 });
+
+export const getAllOrders = (state: RootState) => state.orders.items;
 
 export default orderSlice.reducer;

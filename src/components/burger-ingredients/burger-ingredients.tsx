@@ -5,21 +5,21 @@ import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 import { useSelector } from 'react-redux';
 import { RootState, useDispatch } from '../../services/store';
-import { getIngredients } from '../../services/ingredientSlice';
+import { getIngredients, ingredients } from '../../services/ingredientSlice';
 
 export const BurgerIngredients: FC = () => {
-  const ingredients = useSelector(
-    (state: RootState) => state.ingredients.items
-  );
+  const ingredientsArr = useSelector(ingredients);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
-  const mains = ingredients.filter((ingredient) => ingredient.type === 'main');
-  const sauces = ingredients.filter(
+  const buns = ingredientsArr.filter((ingredient) => ingredient.type === 'bun');
+  const mains = ingredientsArr.filter(
+    (ingredient) => ingredient.type === 'main'
+  );
+  const sauces = ingredientsArr.filter(
     (ingredient) => ingredient.type === 'sauce'
   );
 

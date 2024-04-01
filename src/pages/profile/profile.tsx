@@ -5,7 +5,7 @@ import { updateUser } from '../../services/userSlice';
 
 export const Profile: FC = () => {
   const user = useSelector((store) => store.user.user);
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({
     name: user.name,
@@ -28,7 +28,7 @@ export const Profile: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    // dispatch(updateUser(formValue));
+    dispatch(updateUser(formValue));
   };
 
   const handleCancel = (e: SyntheticEvent) => {
