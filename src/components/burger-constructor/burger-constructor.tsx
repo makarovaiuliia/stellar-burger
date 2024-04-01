@@ -1,19 +1,18 @@
 import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
+import { RootState, useSelector } from '../../services/store';
 
 export const BurgerConstructor: FC = () => {
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-  const constructorItems = {
-    bun: {
-      price: 0
-    },
-    ingredients: []
-  };
-
-  const orderRequest = false;
-
-  const orderModalData = null;
+  const constructorItems = useSelector(
+    (state: RootState) => state.constructorItems
+  );
+  const orderRequest = useSelector(
+    (state: RootState) => state.orders.orderRequest
+  );
+  const orderModalData = useSelector(
+    (state: RootState) => state.orders.orderModalData
+  );
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
@@ -29,8 +28,6 @@ export const BurgerConstructor: FC = () => {
       ),
     [constructorItems]
   );
-
-  return null;
 
   return (
     <BurgerConstructorUI
