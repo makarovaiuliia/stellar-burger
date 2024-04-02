@@ -12,18 +12,16 @@ const getOrders = (orders: TOrder[], status: string): number[] =>
     .slice(0, 20);
 
 export const FeedInfo: FC = () => {
-  /** TODO: взять переменные из стора */
-
-  const orders: TOrder[] = useSelector(getAllOrders);
+  const orders: TOrder[] = useSelector(
+    (state: RootState) => state.orders.feedItems
+  );
   const feed = useSelector((state: RootState) => state.orders.feed);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFeeds());
-    dispatch(getOrdersA());
   }, [dispatch]);
 
   const readyOrders = getOrders(orders, 'done');
-
   const pendingOrders = getOrders(orders, 'pending');
 
   return (

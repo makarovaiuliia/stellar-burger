@@ -6,16 +6,22 @@ import { RootState, useDispatch, useSelector } from '../../services/store';
 import { getFeeds } from '../../services/orderSlice';
 
 export const Feed: FC = () => {
-  const orders: TOrder[] = useSelector((state: RootState) => state.orders.feed);
+  const orders: TOrder[] = useSelector(
+    (state: RootState) => state.orders.feedItems
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getFeeds());
   }, [dispatch]);
 
+  const handleGetFeeds = () => {
+    dispatch(getFeeds());
+  };
+
   if (!orders.length) {
     return <Preloader />;
   }
 
-  <FeedUI orders={orders} handleGetFeeds={() => {}} />;
+  return <FeedUI orders={orders} handleGetFeeds={handleGetFeeds} />;
 };

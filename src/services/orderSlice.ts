@@ -1,4 +1,10 @@
-import { getFeedsApi, getOrdersApi, orderBurgerApi } from '@api';
+import {
+  TFeedsResponse,
+  getFeedsApi,
+  getOrderByNumberApi,
+  getOrdersApi,
+  orderBurgerApi
+} from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 import { RootState } from './store';
@@ -8,10 +14,18 @@ export const getOrdersA = createAsyncThunk('orders/getOrders', async () => {
   return response;
 });
 
-export const getFeeds = createAsyncThunk('orders/getOrders', async () => {
+export const getFeeds = createAsyncThunk('feed/get', async () => {
   const response = await getFeedsApi();
   return response;
 });
+
+export const getOrderById = createAsyncThunk(
+  'orders/getOrder',
+  async (number: number) => {
+    const response = await getOrderByNumberApi(number);
+    return response;
+  }
+);
 
 export const createOrder = createAsyncThunk(
   'orders/create',
@@ -23,7 +37,9 @@ export const createOrder = createAsyncThunk(
 
 interface InitialState {
   items: TOrder[];
-  feed: TOrder[];
+  feed: TFeedsResponse | null;
+  feedItems: TOrder[];
+  modalOrder: TOrder | null;
   loading: boolean;
   error: string | undefined;
   orderRequest: boolean;
@@ -31,7 +47,9 @@ interface InitialState {
 }
 const initialState: InitialState = {
   items: [],
-  feed: [],
+  modalOrder: null,
+  feedItems: [],
+  feed: null,
   loading: false,
   error: undefined,
   orderRequest: false,
@@ -67,6 +85,13 @@ const orderSlice = createSlice({
       })
       .addCase(createOrder.pending, (state, action) => {
         state.orderRequest = true;
+      })
+      .addCase(getOrderById.fulfilled, (state, action) => {
+        state.modalOrder = action.payload.orders[0];
+      })
+      .addCase(getFeeds.fulfilled, (state, action) => {
+        state.feed = action.payload;
+        state.feedItems = action.payload.orders;
       });
   }
 });

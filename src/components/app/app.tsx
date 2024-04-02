@@ -95,8 +95,8 @@ const App = () => {
           path='/feed/:number'
           element={
             <Modal
-              title='hello'
-              children={<FeedInfo />}
+              title='Заказ'
+              children={<OrderInfo />}
               onClose={() => navigate('/feed')}
             />
           }
@@ -115,7 +115,7 @@ const App = () => {
           path='/profile/orders/:number'
           element={
             <Modal
-              title='hello'
+              title='Заказ'
               children={
                 <ProtectedRoute>
                   <OrderInfo />
