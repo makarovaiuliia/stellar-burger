@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 import { RootState } from './store';
 
-export const getOrders = createAsyncThunk('orders/getOrders', async () => {
+export const getOrdersA = createAsyncThunk('orders/getOrders', async () => {
   const response = await getOrdersApi();
   return response;
 });
@@ -41,23 +41,29 @@ const initialState: InitialState = {
 const orderSlice = createSlice({
   name: 'orders',
   initialState,
-  reducers: {},
+  reducers: {
+    resetOrderModalData(state) {
+      state.orderModalData = null;
+      state.orderRequest = false;
+    }
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(getOrders.pending, (state) => {
+      .addCase(getOrdersA.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getOrders.fulfilled, (state, action) => {
+      .addCase(getOrdersA.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload;
       })
-      .addCase(getOrders.rejected, (state, action) => {
+      .addCase(getOrdersA.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.items.push(action.payload);
         state.orderRequest = false;
+        state.orderModalData = action.payload;
       })
       .addCase(createOrder.pending, (state, action) => {
         state.orderRequest = true;
@@ -66,5 +72,6 @@ const orderSlice = createSlice({
 });
 
 export const getAllOrders = (state: RootState) => state.orders.items;
+export const { resetOrderModalData } = orderSlice.actions;
 
 export default orderSlice.reducer;

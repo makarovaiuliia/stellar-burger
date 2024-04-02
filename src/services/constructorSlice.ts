@@ -1,6 +1,7 @@
 // Import createSlice from Redux Toolkit
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
+import { stat } from 'fs';
 
 interface ConstructorState {
   bun: null | TIngredient;
@@ -33,12 +34,16 @@ const constructorSlice = createSlice({
       if (index !== -1) {
         state.ingredients.splice(index, 1);
       }
+    },
+    resetConstructor(state) {
+      state.bun = null;
+      state.ingredients = [];
     }
   }
 });
 
 // Export actions
-export const { setBun, addIngredient, removeIngredient } =
+export const { setBun, addIngredient, removeIngredient, resetConstructor } =
   constructorSlice.actions;
 
 // Export reducer
