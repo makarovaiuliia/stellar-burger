@@ -4,16 +4,10 @@ import { useInView } from 'react-intersection-observer';
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 import { useSelector } from 'react-redux';
-import { useDispatch } from '../../services/store';
-import { getIngredients, ingredients } from '../../services/ingredientSlice';
+import { ingredients } from '../../services/ingredientSlice';
 
 export const BurgerIngredients: FC = () => {
   const ingredientsArr = useSelector(ingredients);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
 
   const buns = ingredientsArr.filter((ingredient) => ingredient.type === 'bun');
   const mains = ingredientsArr.filter(

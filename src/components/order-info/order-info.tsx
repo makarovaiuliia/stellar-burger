@@ -3,24 +3,18 @@ import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useParams } from 'react-router-dom';
-import { RootState, useDispatch, useSelector } from '../../services/store';
-import { getIngredients, ingredients } from '../../services/ingredientSlice';
-import {
-  getAllOrders,
-  getOrderById,
-  getOrdersA
-} from '../../services/orderSlice';
+import { useDispatch, useSelector } from '../../services/store';
+import { ingredients } from '../../services/ingredientSlice';
+import { getOrderById } from '../../services/orderSlice';
 
 export const OrderInfo: FC = () => {
   const { number } = useParams();
-  console.log(number);
-  const orderData = useSelector((state: RootState) => state.orders.modalOrder);
+  const orderData = useSelector((state) => state.orders.modalOrder);
 
   const ingredientsAll: TIngredient[] = useSelector(ingredients);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getIngredients());
     dispatch(getOrderById(parseInt(number!)));
   }, [dispatch]);
 

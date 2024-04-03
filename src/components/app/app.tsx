@@ -12,26 +12,24 @@ import {
 import '../../index.css';
 import styles from './app.module.css';
 
-import {
-  AppHeader,
-  FeedInfo,
-  IngredientDetails,
-  Modal,
-  OrderInfo
-} from '@components';
-import {
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate
-} from 'react-router-dom';
+import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../../utils/protectedRoute';
+import { useDispatch } from '../../services/store';
+import { getIngredients } from '../../services/ingredientSlice';
+import { useEffect } from 'react';
+import { getUser } from '../../services/userSlice';
 
 const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const backgroundLocation = location.state?.background;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+    dispatch(getUser());
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
@@ -87,44 +85,60 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path='/feed/:number' element={<OrderInfo />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route
+          path='/profile/orders/:number'
+          element={
+            <ProtectedRoute>
+              <OrderInfo />
+            </ProtectedRoute>
+          }
+        />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
 
       <Routes>
-        <Route
-          path='/feed/:number'
-          element={
-            <Modal
-              title='Заказ'
-              children={<OrderInfo />}
-              onClose={() => navigate('/feed')}
-            />
-          }
-        />
-        <Route
-          path='/ingredients/:id'
-          element={
-            <Modal
-              title='Детали ингредиента'
-              children={<IngredientDetails />}
-              onClose={() => navigate('/')}
-            />
-          }
-        />
-        <Route
-          path='/profile/orders/:number'
-          element={
-            <Modal
-              title='Заказ'
-              children={
-                <ProtectedRoute>
-                  <OrderInfo />
-                </ProtectedRoute>
-              }
-              onClose={() => navigate('/profile/orders')}
-            />
-          }
-        />
+        {backgroundLocation && (
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal
+                title='Заказ'
+                children={<OrderInfo />}
+                onClose={() => navigate('/feed')}
+              />
+            }
+          />
+        )}
+        {backgroundLocation && (
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal
+                title='Детали ингредиента'
+                children={<IngredientDetails />}
+                onClose={() => navigate('/')}
+              />
+            }
+          />
+        )}
+        {backgroundLocation && (
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <Modal
+                title='Заказ'
+                children={
+                  <ProtectedRoute>
+                    <OrderInfo />
+                  </ProtectedRoute>
+                }
+                onClose={() => navigate('/profile/orders')}
+              />
+            }
+          />
+        )}
       </Routes>
     </div>
   );

@@ -1,14 +1,15 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { loginUser } from '../../services/userSlice';
-import { TLoginData, TRegisterData } from '@api';
+import { TLoginData } from '@api';
 import { useDispatch } from '../../services/store';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -18,7 +19,7 @@ export const Login: FC = () => {
     };
     try {
       await dispatch(loginUser(data)).unwrap();
-      return <Navigate replace to='/profile' />;
+      navigate('/profile');
     } catch (error) {
       console.log(error);
     }

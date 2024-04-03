@@ -1,5 +1,7 @@
-import { RootState, useSelector } from '../services/store';
-import { Navigate } from 'react-router-dom';
+import { isAuth } from '../services/userSlice';
+import { useSelector } from '../services/store';
+import { Navigate, useLocation } from 'react-router-dom';
+import { Preloader } from '@ui';
 
 type ProtectedRouteProps = {
   onlyUnAuth?: boolean;
@@ -7,17 +9,24 @@ type ProtectedRouteProps = {
 };
 
 export const ProtectedRoute = ({
-  children,
-  onlyUnAuth
+  onlyUnAuth = false,
+  children
 }: ProtectedRouteProps) => {
-  const isAuth = useSelector((store: RootState) => store.user.isAuth);
+  const isAuthChecked = useSelector((state) => state.user.isAuthChecked);
+  const user = useSelector((state) => state.user.user);
+  const location = useLocation();
 
-  if (isAuth && onlyUnAuth) {
-    return <Navigate replace to='/profile' />;
+  if (!isAuthChecked) {
+    return <Preloader />;
   }
 
-  if (!isAuth && !onlyUnAuth) {
-    return <Navigate replace to='/login' />;
+  if (onlyUnAuth && user.name) {
+    const { from } = location.state || { from: { pathname: '/' } };
+    return <Navigate to={from} />;
+  }
+
+  if (!onlyUnAuth && !user.name) {
+    return <Navigate to='/login' state={{ from: location }} />;
   }
 
   return children;

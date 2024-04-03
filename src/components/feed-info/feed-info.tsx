@@ -1,9 +1,8 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 
 import { TOrder } from '@utils-types';
 import { FeedInfoUI } from '../ui/feed-info';
-import { RootState, useDispatch, useSelector } from '../../services/store';
-import { getAllOrders, getFeeds, getOrdersA } from '../../services/orderSlice';
+import { useSelector } from '../../services/store';
 
 const getOrders = (orders: TOrder[], status: string): number[] =>
   orders
@@ -12,14 +11,8 @@ const getOrders = (orders: TOrder[], status: string): number[] =>
     .slice(0, 20);
 
 export const FeedInfo: FC = () => {
-  const orders: TOrder[] = useSelector(
-    (state: RootState) => state.orders.feedItems
-  );
-  const feed = useSelector((state: RootState) => state.orders.feed);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getFeeds());
-  }, [dispatch]);
+  const orders: TOrder[] = useSelector((state) => state.orders.feedItems);
+  const feed = useSelector((state) => state.orders.feed);
 
   const readyOrders = getOrders(orders, 'done');
   const pendingOrders = getOrders(orders, 'pending');
