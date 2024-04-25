@@ -1,6 +1,6 @@
 describe('Ingredient Constructor Tests', () => {
   beforeEach(() => {
-    cy.intercept('GET', 'api/ingredients', {
+    cy.intercept('GET', 'http://localhost:4000/ingredients', {
       fixture: 'ingredients.json'
     }).as('getIngredients');
 
@@ -17,7 +17,7 @@ describe('Ingredient Constructor Tests', () => {
     cy.get('.constructor-element__row').should('contain', 'булка');
   });
 
-  it('adds an ingredient to the constructor', () => {
+  it.only('adds an ingredient to the constructor', () => {
     cy.contains('.text', 'Биокотлета')
       .parents('li')
       .within(() => {
