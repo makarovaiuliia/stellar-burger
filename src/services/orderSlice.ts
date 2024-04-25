@@ -4,9 +4,9 @@ import {
   getOrderByNumberApi,
   getOrdersApi,
   orderBurgerApi
-} from '@api';
+} from '../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { TOrder } from '@utils-types';
+import { TOrder } from '../utils/types';
 import { RootState } from './store';
 
 export const getOrdersA = createAsyncThunk('orders/getOrders', async () => {
