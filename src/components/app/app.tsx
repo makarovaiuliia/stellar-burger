@@ -119,6 +119,7 @@ const App = () => {
                 title='Детали ингредиента'
                 children={<IngredientDetails />}
                 onClose={() => navigate('/')}
+                data='ingredient-modal'
               />
             }
           />
