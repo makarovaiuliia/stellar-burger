@@ -100,7 +100,8 @@
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier ./src --write",
     "test": "jest",
-    "commit": "npm run test && cz",
+    "check": "npm run lint:fix && npm run format",
+    "commit": "npm run check && cz",
     "prepare": "husky install",
     "cypress:open": "cypress open"
   },
