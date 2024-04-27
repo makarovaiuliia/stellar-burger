@@ -21,15 +21,12 @@
 // jest.mock('../utils/cookie', () => ({
 //   setCookie: jest.fn()
 // }));
-// const mockLocalStorage = {
-//   setItem: jest.fn(),
-//   getItem: jest.fn(),
-//   removeItem: jest.fn(),
-//   clear: jest.fn(),
-//   key: jest.fn(),
-//   length: 0
-// };
-// global.localStorage = mockLocalStorage;
+
+// window.localStorage.setItem(
+//   'refreshToken',
+//   JSON.stringify('test-refreshToken')
+// );
+// cy.setCookie('accessToken', 'test-accessToken');
 
 // describe('userSlice', () => {
 //   let store: Store;
@@ -110,16 +107,16 @@
 //   // You should add .pending and .rejected tests for each async thunk here
 // });
 
-// describe('Reducers and actions', () => {
-//   it('handles custom action - authChecked', () => {
-//     const action = { type: 'user/authChecked' };
-//     const initialState = {
-//       user: { email: '', name: '' },
-//       isAuth: false,
-//       error: undefined,
-//       isAuthChecked: false
-//     };
-//     const state = userReducer(initialState, action);
-//     expect(state.isAuthChecked).toBe(true);
-//   });
-// });
+// // describe('Reducers and actions', () => {
+// //   it('handles custom action - authChecked', () => {
+// //     const action = { type: 'user/authChecked' };
+// //     const initialState = {
+// //       user: { email: '', name: '' },
+// //       isAuth: false,
+// //       error: undefined,
+// //       isAuthChecked: false
+// //     };
+// //     const state = userReducer(initialState, action);
+// //     expect(state.isAuthChecked).toBe(true);
+// //   });
+// // });
