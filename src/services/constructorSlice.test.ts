@@ -45,6 +45,31 @@ describe('constructorSlice tests', () => {
       ]
     });
   });
+
+  it('should handle addIngredient (bun)', () => {
+    const newIngredient = {
+      _id: '2',
+      name: 'Test Ingredient',
+      type: 'bun',
+      proteins: 5,
+      fat: 5,
+      carbohydrates: 5,
+      calories: 100,
+      price: 5,
+      image: '',
+      image_large: '',
+      image_mobile: ''
+    };
+
+    expect(reducer(initialState, addIngredient(newIngredient))).toEqual({
+      ...initialState,
+      bun: {
+        ...newIngredient,
+        id: 'mocked-uuid'
+      }
+    });
+  });
+
   it('should handle removeIngredient', () => {
     const ingredientId = uuidv4();
     const stateWithIngredients = {

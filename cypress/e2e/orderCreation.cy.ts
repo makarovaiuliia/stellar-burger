@@ -1,18 +1,18 @@
 describe('Order creation tests', () => {
   it('logs in and creates an order', () => {
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
+    cy.intercept('GET', 'api/ingredients', {
       fixture: 'ingredients.json'
     }).as('getIngredients');
 
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
+    cy.intercept('GET', 'api/auth/user', {
       fixture: 'user.json'
     }).as('getUser');
 
-    cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', {
+    cy.intercept('POST', 'api/orders', {
       fixture: 'orderResponse.json'
     }).as('createOrder');
 
-    cy.visit('http://localhost:4000/login');
+    cy.visit('login');
     cy.get('.input__textfield[type="email"]').type('makarova@gmail.com');
     cy.get('.input__textfield[type="password"]').type('qwerty');
     window.localStorage.setItem(
@@ -22,7 +22,7 @@ describe('Order creation tests', () => {
     cy.setCookie('accessToken', 'test-accessToken');
     cy.get('button[type="submit"]').click();
 
-    cy.visit('http://localhost:4000');
+    cy.visit('');
 
     cy.contains('.text', 'булка')
       .parents('li')
