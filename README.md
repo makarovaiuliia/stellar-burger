@@ -1,5 +1,7 @@
 # Stellar Burger
 
+[link to deploy](https://burgers-stellar.netlify.app/)
+
 Stellar Burger is an online platform for an imaginary burger restaurant where users can order burgers, login, register, and view their orders. This project is built using modern web development technologies including React, Redux Toolkit, Webpack, TypeScript, Jest, and Cypress.
 
 ## Table of Contents
