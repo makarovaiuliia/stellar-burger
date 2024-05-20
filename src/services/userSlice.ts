@@ -8,9 +8,9 @@ import {
   registerUserApi,
   resetPasswordApi,
   updateUserApi
-} from '@api';
+} from '../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { TUser } from '@utils-types';
+import { TUser } from '../utils/types';
 import { setCookie } from '../utils/cookie';
 import { RootState } from './store';
 

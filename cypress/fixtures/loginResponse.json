@@ -1,0 +1,8 @@
+{
+  "refreshToken": "12345",
+  "accessToken": "12345",
+  "user": {
+    "email": "makarova@gmail.com",
+    "name": "Gen"
+  }
+}
